@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping(MemberController.URI)
@@ -25,8 +26,6 @@ public class MemberController {
     @Transactional
     @PostMapping(path = "/save")
     public Iterable<Member> addMember(@Valid @RequestBody Member newMember) {
-        System.out.println(newMember);
-
         Date date = new Date();
         Member newMemberData = new Member(
                 newMember.getName(),
@@ -46,6 +45,19 @@ public class MemberController {
         );
 
         memberRepository.save(newMemberData);
+        return memberRepository.findAll();
+    }
+
+    @CrossOrigin
+    @Transactional
+    @PostMapping(path = "/delete")
+    public Iterable<Member> deleteMember(@Valid @RequestBody Member member) {
+        List<Member> members = memberRepository.findByNameAndGrade(member.getName(), member.getGrade());
+
+        if (members.size() > 0) {
+            memberRepository.deleteById(members.get(0).getId());
+        }
+
         return memberRepository.findAll();
     }
 }
