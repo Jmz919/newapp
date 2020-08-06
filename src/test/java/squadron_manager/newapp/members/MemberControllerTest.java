@@ -79,6 +79,59 @@ import java.util.Date;
 //    }
 //
 //    @Test
+//    public void updateMemberTest() {
+//        Date date = new Date();
+//
+//        Member newMember = new Member(
+//                "Hoag, Jacy L",
+//                "TSgt",
+//                "UHBYGVYT",
+//                "3D1X2",
+//                "SCXP",
+//                "NCOIC",
+//                date,
+//                "757-225-8454",
+//                "SMS Jackson",
+//                date,
+//                date,
+//                date,
+//                date,
+//                date
+//        );
+//
+//        Member updatedMember = new Member(
+//                "Hoag, Jacy L",
+//                "MSgt",
+//                "",
+//                "",
+//                "",
+//                "",
+//                date,
+//                "",
+//                "",
+//                date,
+//                date,
+//                date,
+//                date,
+//                date
+//        );
+//
+//        String[] fields = new String[1];
+//        fields[0] = "grade";
+//
+//        memberRepository.save(newMember);
+//
+//        given()
+//                .port(port)
+//                .when()
+//                .get(MemberController.URI + "/save")
+//                .then()
+//                .statusCode(200)
+//                .body("[0].name", equalTo("Hoag, Jacy L"));
+//        memberRepository.deleteAll();
+//    }
+//
+//    @Test
 //    public void returnsDeletedMember() {
 //        Date date = new Date();
 //        Member newMember = new Member(
