@@ -1,6 +1,8 @@
 package squadron_manager.newapp.members;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -8,30 +10,18 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
-@RestController
-@RequestMapping(MemberController.URI)
-
-public class MemberController {
-    public static final String URI = "/api/members";
-
-    @Autowired
+@Service
+@Slf4j
+public class MemberService {
     private MemberRepository memberRepository;
 
-
-    MemberService memberService = new MemberService(memberRepository);
-
-    @CrossOrigin
-    @GetMapping
-    public @ResponseBody
-    Iterable<Member> getMembers() {
-        return memberRepository.findAll();
+    @Autowired
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
     }
 
-    @CrossOrigin
-    @Transactional
-    @PostMapping(path = "/save")
-    public Iterable<Member> addMember(@Valid @RequestBody Member newMember) {
-//        memberService.addMember(newMember);
+
+    public void addMember(Member newMember) {
         Date date = new Date();
         Member newMemberData = new Member(
                 newMember.getName(),
@@ -50,14 +40,10 @@ public class MemberController {
                 date
         );
         memberRepository.save(newMemberData);
-        return memberRepository.findAll();
     }
 
-    @CrossOrigin
-    @Transactional
-    @PostMapping(path = "/update")
-    public Iterable<Member> updateMember(@Valid @RequestBody Member updatedMember) {
-//        memberService.updateMember(updatedMember);
+
+    public void updateMember(Member updatedMember) {
         List<Member> members = memberRepository.findByName(updatedMember.getName());
 
         if (updatedMember.getGrade() == null) {
@@ -136,19 +122,13 @@ public class MemberController {
             }
             memberRepository.save(members.get(0));
         }
-
-        return memberRepository.findAll();
     }
 
-    @CrossOrigin
-    @Transactional
-    @PostMapping(path = "/delete")
-    public Iterable<Member> deleteMember(@Valid @RequestBody Member member) {
-//        memberService.deleteMember(member);
+
+    public void deleteMember(Member member) {
         List<Member> members = memberRepository.findByNameAndGrade(member.getName(), member.getGrade());
         if (members.size() > 0) {
             memberRepository.deleteById(members.get(0).getId());
         }
-        return memberRepository.findAll();
     }
 }
