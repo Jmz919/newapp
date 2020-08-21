@@ -14,11 +14,21 @@ import java.util.List;
 public class MemberController {
     public static final String URI = "/api/members";
 
+
+    MemberService memberService;
+
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
-    MemberService memberService = new MemberService(memberRepository);
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @CrossOrigin
     @GetMapping
@@ -31,25 +41,28 @@ public class MemberController {
     @Transactional
     @PostMapping(path = "/save")
     public Iterable<Member> addMember(@Valid @RequestBody Member newMember) {
-//        memberService.addMember(newMember);
-        Date date = new Date();
-        Member newMemberData = new Member(
-                newMember.getName(),
-                newMember.getGrade(),
-                newMember.getAssignedPas(),
-                newMember.getDafsc(),
-                newMember.getOfficeSymbol(),
-                newMember.getDutyTitle(),
-                newMember.getDutyStartDate(),
-                newMember.getDutyPhone(),
-                newMember.getSupvName(),
-                newMember.getSupvBeginDate(),
-                newMember.getDateArrivedStation(),
-                newMember.getRnltd(),
-                newMember.getDor(),
-                date
-        );
-        memberRepository.save(newMemberData);
+
+        memberService.addMember(newMember);
+
+
+//        Date date = new Date();
+//        Member newMemberData = new Member(
+//                newMember.getName(),
+//                newMember.getGrade(),
+//                newMember.getAssignedPas(),
+//                newMember.getDafsc(),
+//                newMember.getOfficeSymbol(),
+//                newMember.getDutyTitle(),
+//                newMember.getDutyStartDate(),
+//                newMember.getDutyPhone(),
+//                newMember.getSupvName(),
+//                newMember.getSupvBeginDate(),
+//                newMember.getDateArrivedStation(),
+//                newMember.getRnltd(),
+//                newMember.getDor(),
+//                date
+//        );
+//        memberRepository.save(newMemberData);
         return memberRepository.findAll();
     }
 

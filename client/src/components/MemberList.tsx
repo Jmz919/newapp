@@ -5,6 +5,7 @@ import MemberRow from "./MemberRow";
 import {makeStyles} from "@material-ui/core/styles";
 import MemberModel from "../store/member/model/MemberModel";
 import CloseIcon from "@material-ui/icons/Close";
+import {MEMBER_MENU_LIST_ACTIONS} from "./menu/MemberListMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -17,14 +18,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
     members: MemberModel[],
-    callBack: () => void;
+    callBack: (type: string) => void;
 }
 
 const MemberList: React.FC<Props> = (props) => {
     const classes = useStyles();
+
+
+    function handleClick() {
+        props.callBack(MEMBER_MENU_LIST_ACTIONS.SHOW_MEMBER_LIST)
+    }
+
     return (
         <div className={classes.memberList}>
-            <Button onClick={props.callBack}>
+            <Button onClick={handleClick}>
                 <CloseIcon />
             </Button>
 

@@ -7,6 +7,7 @@ import classNames from "classnames";
 import {makeStyles} from "@material-ui/core/styles";
 import SaveMemberModel from "../store/member/model/SaveMemberModel";
 import CloseIcon from "@material-ui/icons/Close";
+import {MEMBER_MENU_LIST_ACTIONS} from "./menu/MemberListMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-    callBack: () => void;
+    callBack: (type: string) => void;
 }
 
 const MemberInput: React.FC<Props> = (props) => {
@@ -104,9 +105,13 @@ const MemberInput: React.FC<Props> = (props) => {
         console.log(res);
     }
 
+    function handleClick() {
+        props.callBack(MEMBER_MENU_LIST_ACTIONS.ADD_MEMBER)
+    }
+
     return (
         <div>
-            <Button onClick={props.callBack}>
+            <Button onClick={handleClick}>
                 <CloseIcon />
             </Button>
             <form className={classNames('.addMemberForm', classes.container)} noValidate autoComplete="off">

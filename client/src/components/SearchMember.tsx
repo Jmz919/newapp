@@ -74,7 +74,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
     members: MemberModel[],
-
 }
 
 const SearchMember: React.FC<Props> = (props) => {
@@ -84,6 +83,7 @@ const SearchMember: React.FC<Props> = (props) => {
 
     const handleChange = (e: any) => {
         updateSearch(e.target.value);
+        console.log(search);
     }
 
     const keyPressed = (e: any) => {

@@ -7,6 +7,7 @@ import classNames from "classnames";
 import {makeStyles} from "@material-ui/core/styles";
 import SaveMemberModel from "../store/member/model/SaveMemberModel";
 import CloseIcon from "@material-ui/icons/Close";
+import {MEMBER_MENU_LIST_ACTIONS} from "./menu/MemberListMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface Props {
-    callBack: () => void;
+    callBack: (type: string) => void;
 }
 
 const MemberUpdate: React.FC<Props> = (props) => {
@@ -96,6 +97,10 @@ const MemberUpdate: React.FC<Props> = (props) => {
         }
     }
 
+    function handleClick() {
+        props.callBack(MEMBER_MENU_LIST_ACTIONS.UPDATE_MEMBER)
+    }
+
     const updateClick = () => {
         let updatedMember: SaveMemberModel = new SaveMemberModel(name, grade, pas, dafsc, office, title,
             startDate, phone, supervisor, supvBeginDate, dateArrived, rnltd, dor, new Date());
@@ -106,7 +111,7 @@ const MemberUpdate: React.FC<Props> = (props) => {
 
     return (
         <div>
-            <Button onClick={props.callBack}>
+            <Button onClick={handleClick}>
                 <CloseIcon />
             </Button>
             <form className={classNames('.updateMemberForm', classes.container)} noValidate autoComplete="off">
